@@ -1,8 +1,4 @@
 /.idea
 /node_modules
-<<<<<<< HEAD
-=======
-!/store/*
-!/store/.gitkeep
->>>>>>> 11b7ebca28eca51089130fc6c11c56969168f676
-/app/configs/default.json
+/store/*
+/configs/default.json
