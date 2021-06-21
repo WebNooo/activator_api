@@ -83,10 +83,24 @@ class FileController {
         }
     }
 
-    Download = (req: express.Request, res: express.Response) => {
+    Download = async (req: express.Request, res: express.Response) => {
 
+        try {
+            const version = await VersionModel.findOne({name: req.params.type})
+            if (!version)
+                return  res.status(404).json({message: "Version not found"})
 
-        res.download("")
+            const file:IFile | null = await FileModel.findOne({name: req.params.file, version: version.version})
+
+            if (!file)
+                return res.status(404).json({message: "File not found"})
+
+            res.download(`${this.store}\\${version.version}\\${file.storeName}`, file.name)
+
+        }catch(e) {
+            console.log(e)
+            return res.status(500).json({message: "Server error"})
+        }
     }
 
 }
